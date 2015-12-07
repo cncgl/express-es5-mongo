@@ -1,0 +1,14 @@
+.idea/
+node_modules/
+public/components
+.sass-cache
+*.log
+
+app/controllers/*.js
+app/controllers/*.map
+app/models/*.js
+app/models/*.map
+config/*.js
+config/*.map
+
+
