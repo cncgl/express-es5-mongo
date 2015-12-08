@@ -1,0 +1,23 @@
+//
+   Created by shigeru on 15/12/08.
+
+div.article
+h3
+  a(href='/articles/'+article._id title=article.title) #{article.title}
+
+p #{article.body}
+
+span.muted #{article.createdAt.toISOString()|date('M d, Y  h:i a')}
+
+if article.user
+  | &nbsp; - &nbsp;
+  span Author:
+    a(href='/users/'+article.user._id) #{ article.user.name || article.user.username }
+
+if article.tags
+  | &nbsp; - &nbsp;
+  span Tags:
+    each tag in article.tags.split(',')
+      i(class=['muted', 'fa', 'fa-tag']) &nbsp;
+      a(href='/tags/'+tag class='tag') #{ tag }
+      | &nbsp;&nbsp;
