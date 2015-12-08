@@ -27,15 +27,16 @@ module.exports = (app, config) ->
   app.use express.static config.root + '/public'
   app.use methodOverride()
 
-  controllers = glob.sync config.root + '/app/controllers/**/*.coffee'
-  controllers.forEach (controller) ->
-    require(controller)(app)
+  # controllers = glob.sync config.root + '/app/controllers/**/*.coffee'
+  # controllers.forEach (controller) ->
+  #  require(controller)(app)
 
   # catch 404 and forward to error handler
   app.use (req, res, next) ->
-    err = new Error 'Not Found'
-    err.status = 404
-    next err
+    # err = new Error 'Not Found'
+    # err.status = 404
+    # next err
+    next()
 
   # error handlers
 
