@@ -11,4 +11,6 @@ app/models/*.map
 config/*.js
 config/*.map
 
+app/views/**/*.html
+
 
