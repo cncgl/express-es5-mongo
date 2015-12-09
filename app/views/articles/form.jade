@@ -1,0 +1,53 @@
+//
+   Created by shigeru on 15/12/09.
+
+extends ../layouts/default.jade
+
+block main
+  h1= title
+  hr
+
+block content
+  if article.isNew
+    - action = '/articles'
+  else
+    - action = '/articles/' + article._id
+
+  .row
+    .col-md-8
+      form(method="post" action=action enctype="multipart/form-data" role="form" class="form-horizontal")
+
+      input(type='hidden' name='_csrf' value=csrf_token)
+
+      unless article.isNew
+        input(type='hidden' name='_method' value='PUT')
+
+        .form-group
+          label(for='title' class=['col-sm-2', 'control-label']) Title
+          .col-sm-10
+            input#title.form-control(type='text' name='title' value=article.title placeholder='Enter the title')
+
+        .form-group
+          label(for='file' class=['col-sm-2', 'control-label']) Image
+          .col-sm-10
+            input#file.form-control(type='file' name='image')
+
+        .form-group
+          label(for='desc' class=['col-sm-2', 'control-label']) Body
+          .col-sm-10
+            textarea(name='body' placeholder='Enter the article description' id='desc' cols='30' rows='10' class='form-control') #{article.body}
+
+        .form-group
+          label(for='tags' class=['col-sm-2', 'control-label']) Tags
+          .col-sm-10
+            input#tags.form-control(type='text' name='tags' value=article.tags placeholder="Enter the tags")
+
+        .form-group
+          div(class=['col-sm-offset-2', 'col-sm-10'])
+            button(class=['btn', 'btn-primary'] type='submit') Save
+            | &nbsp;
+            a(href='/articles' class=['btn', 'btn-link']) Cancel
+
+  .col-md-4
+    if (!article.isNew && article.image && article.image.files && article.image.files.length)
+      img(src=article.image.cdnUri+'/mini_'+article.image.files[0] alt='')
