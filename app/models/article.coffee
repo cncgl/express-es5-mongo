@@ -3,11 +3,14 @@
 mongoose = require 'mongoose'
 Schema   = mongoose.Schema
 
+# Article Schema
 ArticleSchema = new Schema(
   title: String
   url: String
   text: String
 )
+
+
 
 ArticleSchema.virtual('date')
   .get (-> this._id.getTimestamp())

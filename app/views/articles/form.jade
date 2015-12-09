@@ -16,11 +16,10 @@ block content
   .row
     .col-md-8
       form(method="post" action=action enctype="multipart/form-data" role="form" class="form-horizontal")
+        input(type='hidden' name='_csrf' value=csrf_token)
 
-      input(type='hidden' name='_csrf' value=csrf_token)
-
-      unless article.isNew
-        input(type='hidden' name='_method' value='PUT')
+        unless article.isNew
+          input(type='hidden' name='_method' value='PUT')
 
         .form-group
           label(for='title' class=['col-sm-2', 'control-label']) Title
