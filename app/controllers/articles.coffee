@@ -9,6 +9,7 @@ Article = mongoose.model 'Article'
 
 # load
 exports.load = wrap( (req, res, next, id) ->
+  console.log('id: ' + id)
   req.article = yield Article.load(id)
   unless req.article
     return next(new Error('Article not found'))
@@ -40,7 +41,8 @@ exports.new = (req, res) ->
 exports.create = wrap( (req, res) ->
   article = new Article(only(req.body, 'title body tags'))
 
-  article.user = req.user
+  # article.user = req.user
+  yield article.uploadAndSave()
   req.flash 'success', 'Successfully created article!'
   res.redirect('/articles/' + article._id)
 )

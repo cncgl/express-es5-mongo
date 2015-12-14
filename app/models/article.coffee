@@ -10,19 +10,31 @@ ArticleSchema = new Schema(
   text: String
 )
 
+# validations
+ArticleSchema.path('title').required(false, 'Article title cannot be blank')
+ArticleSchema.path('text').required(false, 'Article text cannot be blank')
 
 
-ArticleSchema.virtual('date')
-  .get (-> this._id.getTimestamp())
+# ArticleSchema.virtual('date')
+#  .get (-> this._id.getTimestamp())
+
+# method
+ArticleSchema.methods = {
+  uploadAndSave: (image) ->
+    err = @validateSync()
+    if err && err.toString()
+      throw new Error(err.toString())
+    return @save()
+}
 
 
 # static
 ArticleSchema.statics = {
   load: (_id) ->
     return @findOne {_id}
-    .populate('user', 'name email username')
-    .populate('comments.user')
-    .exec
+    # .populate('user', 'name email username')
+    # .populate('comments.user')
+    .exec()
 
   list: (options) ->
     criteria = options.criteria || {}
@@ -37,6 +49,6 @@ ArticleSchema.statics = {
 }
 
 
-
-mongoose.model 'Article', ArticleSchema
+console.log('load article')
+mongoose.model('Article', ArticleSchema)
 

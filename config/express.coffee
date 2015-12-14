@@ -3,16 +3,22 @@ glob = require 'glob'
 
 favicon = require 'serve-favicon'
 logger = require 'morgan'
+session = require 'express-session'
 cookieParser = require 'cookie-parser'
 bodyParser = require 'body-parser'
 compress = require 'compression'
 methodOverride = require 'method-override'
+mongoStore = require('connect-mongo')(session)
+flash = require 'connect-flash'
+pkg = require '../package.json'
+
 
 module.exports = (app, config) ->
   env = process.env.NODE_ENV || 'development'
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development'
 
+  # Jade templating engine
   app.set 'views', config.root + '/app/views'
   app.set 'view engine', 'jade'
 
@@ -22,10 +28,24 @@ module.exports = (app, config) ->
   app.use bodyParser.urlencoded(
     extended: true
   )
+
+  # cookie parser
   app.use cookieParser()
   app.use compress()
   app.use express.static config.root + '/public'
   app.use methodOverride()
+  app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    secret: pkg.name,
+    store: new mongoStore({
+      url: config.db,
+      collection : 'sessions'
+    })
+  }));
+
+  #
+  app.use(flash())
 
   # controllers = glob.sync config.root + '/app/controllers/**/*.coffee'
   # controllers.forEach (controller) ->
