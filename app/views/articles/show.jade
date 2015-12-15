@@ -1,0 +1,45 @@
+//
+   Created by shigeru on 15/12/15.
+
+extends ../layouts/default.jade
+
+block main
+  h1= article.title
+
+block content
+  .now
+    .col-md-8
+      p= article.body
+      .meta
+        if article.user
+          | Author: &nbsp;
+          a(href='/users/' + article.user._id)
+            article.user.name || article.user.username
+        if article.tags
+          p Tags: &nbsp;
+            for tag in article.tags.split(',')
+              i(class=['muted', 'fa', 'fa-tag'])
+              | &nbsp;
+              a.tag(href='/tags/' + tag) #{ tag }
+              | &nbsp;&nbsp;
+        span.muted= article.createdAt.toISOString()|date('M d, Y  h:i a')
+    .col-md-4
+      if !article.isNew && article.image && article.image.files && article.image.files.length
+        img(src=article.image.cdnUri + '/mini_' + article.image.files[0] alt='')
+
+  form(action='/articles/' + article.id method='post' onsubmit="return confirm('Are you sure?')")
+    br/
+    input(type='hidden' name='_csrf' value=csrf_token)
+    a(href='/articles/' + article._id + '/edit' title='edit' class=['btn', 'btn-default'])
+      Edit
+    | &nbsp;
+    input(type="hidden" name="_method" value="DELETE")
+    button(class=['btn', 'btn-danger'] type='submit') Delete
+
+  br/
+
+//
+  h3 Comments
+    for comment in article.comments
+      include ../comments/comment.html
+    include ../comments/form.html
