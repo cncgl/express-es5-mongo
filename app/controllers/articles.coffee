@@ -39,7 +39,8 @@ exports.new = (req, res) ->
 
 # create
 exports.create = wrap( (req, res) ->
-  article = new Article(only(req.body, 'title body tags'))
+  console.log('req.body ' + req.body)
+  article = new Article(only(req.body, 'title url text'))
 
   # article.user = req.user
   yield article.uploadAndSave()
@@ -63,6 +64,7 @@ exports.update = (req, res) ->
 
 # show
 exports.show = (req, res) ->
+  console.log('req.article ' + req.article)
   res.render 'articles/show', {
     title: req.article.title
     article: req.article

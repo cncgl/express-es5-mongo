@@ -7,7 +7,7 @@ h3
 
 p #{article.body}
 
-span.muted #{article.createdAt.toISOString()|date('M d, Y  h:i a')}
+span.muted= article.createdAt.toISOString()
 
 if article.user
   | &nbsp; - &nbsp;
