@@ -8,6 +8,7 @@ ArticleSchema = new Schema(
   title: String
   url: String
   text: String
+  createdAt: { type: Date, default: Date.now }
 )
 
 # validations
