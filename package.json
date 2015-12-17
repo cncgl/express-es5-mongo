@@ -18,7 +18,7 @@
     "glob": "^5.0.3",
     "jade": "^1.11.0",
     "kerberos": "0.0.17",
-    "method-override": "^2.3.0",
+    "method-override": "^2.3.5",
     "mongoose": "^4.1.2",
     "morgan": "^1.6.1",
     "only": "0.0.2",

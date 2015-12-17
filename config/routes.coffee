@@ -3,6 +3,8 @@
 home = require '../app/controllers/home'
 articles = require '../app/controllers/articles'
 
+articleAuth = [];
+
 module.exports = (app) ->
   app.param('id', articles.load)
   app.get('/articles', articles.index)

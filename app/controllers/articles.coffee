@@ -56,11 +56,14 @@ exports.edit = (req, res) ->
   }
 
 # update
-exports.update = (req, res) ->
+exports.update = wrap( (req, res) ->
+  console.log('req.article ' + req.article)
   article = req.article
 
-  assign article, only(req.body, 'title body tags')
+  assign article, only(req.body, 'title text url')
+  yield article.uploadAndSave()
   res.redirect('/articles/' + article._id)
+)
 
 # show
 exports.show = (req, res) ->

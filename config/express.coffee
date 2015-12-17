@@ -29,11 +29,20 @@ module.exports = (app, config) ->
     extended: true
   )
 
+  # body parser
+  app.use methodOverride (req) ->
+    console.log('method-override ' + req.body )
+    if req.body and typeof req.body == 'object' and req.body._method
+      method = req.body._method
+      delete req.body._method
+      console.log('method ' + method)
+      method
+
+
   # cookie parser
   app.use cookieParser()
-  app.use compress()
+  # app.use compress()
   app.use express.static config.root + '/public'
-  app.use methodOverride()
   app.use(session({
     resave: true,
     saveUninitialized: true,
