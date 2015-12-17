@@ -15,8 +15,7 @@ block content
 
   .row
     .col-md-8
-      // form(method="post" action=action enctype="multipart/form-data" role="form" class="form-horizontal")
-      form(method="post" action=action enctype="application/x-www-form-urlencoded" role="form" class="form-horizontal")
+      form.form-horizontal(method='post' action=action enctype='application/x-www-form-urlencoded' role='form')
         input(type='hidden' name='_csrf' value=csrf_token)
 
         unless article.isNew

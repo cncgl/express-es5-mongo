@@ -3,10 +3,11 @@
 
 .article
 h3
-  a(href='/articles/'+article._id title=article.title)= article.title
+  a(href='/articles/'+article._id title=article.title)= article._id
 
-p= article.body
-
+p= article.title
+p= article.text
+p= article.url
 span.muted= article.createdAt.toISOString()
 
 if article.user
@@ -19,5 +20,5 @@ if article.tags
   span Tags:
     each tag in article.tags.split(',')
       i(class=['muted', 'fa', 'fa-tag']) &nbsp;
-      a(href='/tags/'+tag class='tag') #{ tag }
+      a.tag(href='/tags/'+tag)= tag
       | &nbsp;&nbsp;
