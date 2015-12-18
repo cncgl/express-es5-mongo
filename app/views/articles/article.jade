@@ -13,7 +13,7 @@ span.muted= article.createdAt.toISOString()
 if article.user
   | &nbsp; - &nbsp;
   span Author:
-    a(href='/users/'+article.user._id) #{ article.user.name || article.user.username }
+    a(href='/users/'+article.user._id)= article.user.name || article.user.username
 
 if article.tags
   | &nbsp; - &nbsp;

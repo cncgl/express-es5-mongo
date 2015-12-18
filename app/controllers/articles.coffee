@@ -60,7 +60,7 @@ exports.update = wrap( (req, res) ->
   console.log('req.article ' + req.article)
   article = req.article
 
-  assign article, only(req.body, 'title text url')
+  assign article, only(req.body, 'title url text')
   yield article.uploadAndSave()
   res.redirect('/articles/' + article._id)
 )
